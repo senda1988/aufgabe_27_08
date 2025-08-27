@@ -1,7 +1,7 @@
 name: deploy
 on: push
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -9,6 +9,7 @@ jobs:
 
       - name: ssh setup
         run: |
+         mkdir ~/.ssh
          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/meinprivatekey
          chmod 600 ~/.ssh/meinprivatekey
          for ip in ${{ secrets.EC2_IPs }}
