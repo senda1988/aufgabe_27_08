@@ -19,6 +19,6 @@ jobs:
       - name: copy files
         run: |
          for ip in ${{ secrets.EC2_IPs }}; do
-          scp -i ~/.ssh/meinprivatekey index.html ubuntu@$ip:/var/www/html/index.html
+          scp -i ~/.ssh/meinprivatekey index.html ubuntu@$ip:/home/ubuntu/index.html
           ssh -i ~/.ssh/meinprivatekey ubuntu@$ip "sudo cp /home/ubuntu/index.html /var/www/html/index.html"
          done
