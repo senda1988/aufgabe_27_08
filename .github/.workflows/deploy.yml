@@ -1,0 +1,23 @@
+name: deploy
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: ssh setup
+        run: |
+         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/meinprivatekey
+         chmod 600 ~/.ssh/meinprivatekey
+         for ip in ${{ secrets.EC2_IPs }}
+          ssh-keyscan -H $ip >> ~/.ssh/known_hosts
+         done
+        
+      - name: copy files
+        run: |
+         for ip in ${{ secrets.EC2_IPs }}
+          scp -i ~/.ssh/meinprivatekey index.html ubuntu@$ip:/var/www/html/index.html
+          ssh -i ~/.ssh/meinprivatekey ubuntu@$ip "sudo cp /home/ubuntu/index.html /var/www/html/index.html"
+         done
