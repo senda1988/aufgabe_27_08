@@ -9,7 +9,7 @@ jobs:
 
       - name: ssh setup
         run: |
-         mkdir ~/.ssh
+         mkdir -p ~/.ssh
          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/meinprivatekey
          chmod 600 ~/.ssh/meinprivatekey
          for ip in ${{ secrets.EC2_IPs }}
