@@ -1,8 +1,5 @@
 name: deploy prod
-on: 
-  push:
-    tags:
-      - 'v*'
+on: push
 jobs:
   deploy:
     runs-on: ubuntu-latest
